@@ -12,7 +12,7 @@ func main() {
 	fmt.Print(len([]rune(s)))
 	strconv.Itoa(4)*/
 
-	conn, err := zookeeper.Connect([]string{"182.92.99.111:2181"}, time.Second*1000)
+	conn, err := zookeeper.Connect([]string{"182.92.99.111:2181"}, time.Second*5)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -22,6 +22,10 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+	_,err=conn.Create("/test_time",[]byte("aaa"),zookeeper.ModeEphemeral,zookeeper.WorldACL(zookeeper.PermissionAll))
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(string(data))
-
+	time.Sleep(time.Hour)
 }

@@ -211,7 +211,7 @@ func (c *Conn) loop() {
 				wg.Done()
 			}()
 
-			//c.resendZkAuth(reauthChan)
+			c.resendZkAuth(reauthChan)
 			//c.sendSetWatches()
 			wg.Wait()
 		}
@@ -358,7 +358,7 @@ func (c *Conn) resendZkAuth(reauthReadyChan chan struct{}) {
 
 		if err != nil {
 			c.logger.Printf("call to sendRequest failed during credential resubmit: %s", err)
-			// FIXME(prozlach): lets ignore errors for now
+
 			continue
 		}
 
@@ -375,7 +375,7 @@ func (c *Conn) resendZkAuth(reauthReadyChan chan struct{}) {
 		}
 		if res.err != nil {
 			c.logger.Printf("credential re-submit failed: %s", res.err)
-			// FIXME(prozlach): lets ignore errors for now
+
 			continue
 		}
 	}
@@ -408,7 +408,7 @@ func (c *Conn) AddAuth(scheme string, auth []byte) error {
 
 	// Remember authdata so that it can be re-submitted on reconnect
 	//
-	// FIXME(prozlach): For now we treat "userfoo:passbar" and "userfoo:passbar2"
+
 	// as two different entries, which will be re-submitted on reconnet. Some
 	// research is needed on how ZK treats these cases and
 	// then maybe switch to something like "map[username] = password" to allow
@@ -482,7 +482,7 @@ func (c *Conn) Exists(path string) (bool, *Stat, error) {
 	res := &existsResponse{}
 	_, err := c.request(opExists, &existsRequest{Path: path, Watch: false}, res, nil)
 	exists := true
-	//todo
+
 	if err == ErrNoNode {
 		exists = false
 		err = nil
