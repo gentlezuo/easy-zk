@@ -7,8 +7,10 @@ import (
 	"time"
 )
 
+const ZK_ADDRESS=""
+
 func TestConnect(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -19,7 +21,7 @@ func TestConnect(t *testing.T) {
 }
 
 func TestConn_Create(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -50,7 +52,7 @@ func TestConn_Create(t *testing.T) {
 }
 
 func TestConn_Get(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -72,7 +74,7 @@ func TestConn_Get(t *testing.T) {
 }
 
 func TestConn_Exists(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -95,7 +97,7 @@ func TestConn_Exists(t *testing.T) {
 }
 
 func TestConn_Children(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -111,7 +113,7 @@ func TestConn_Children(t *testing.T) {
 }
 
 func TestConn_Delete(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -131,7 +133,7 @@ func TestConn_Delete(t *testing.T) {
 }
 
 func TestConn_Close(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -140,7 +142,7 @@ func TestConn_Close(t *testing.T) {
 }
 
 func TestConn_GetACL(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -156,7 +158,7 @@ func TestConn_GetACL(t *testing.T) {
 }
 
 func TestConn_AddAuth(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -208,7 +210,7 @@ func TestConn_AddAuth(t *testing.T) {
 }
 
 func TestConn_SessionID(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
@@ -219,7 +221,7 @@ func TestConn_SessionID(t *testing.T) {
 }
 
 func TestConn_Server(t *testing.T) {
-	addr := []string{"182.92.99.111:2181"}
+	addr := []string{ZK_ADDRESS}
 	conn, err := Connect(addr, time.Second*2)
 	if err != nil {
 		t.Error(err)
