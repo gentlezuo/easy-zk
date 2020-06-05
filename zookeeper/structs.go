@@ -227,14 +227,7 @@ type setSaslResponse struct {
 	Token string
 }
 
-/*type setWatchesRequest struct {
-	RelativeZxid int64
-	DataWatches  []string
-	ExistWatches []string
-	ChildWatches []string
-}*/
 
-//type setWatchesResponse struct{}
 
 type syncRequest pathRequest
 type syncResponse pathResponse
@@ -242,134 +235,6 @@ type syncResponse pathResponse
 type setAuthRequest auth
 type setAuthResponse struct{}
 
-/*type multiRequestOp struct {
-	Header multiHeader
-	Op     interface{}
-}*/
-/*type multiRequest struct {
-	Ops        []multiRequestOp
-	DoneHeader multiHeader
-}*/
-/*type multiResponseOp struct {
-	Header multiHeader
-	String string
-	Stat   *Stat
-	Err    ErrCode
-}*/
-/*type multiResponse struct {
-	Ops        []multiResponseOp
-	DoneHeader multiHeader
-}*/
-
-// zk version 3.5 reconfig API
-/*type reconfigRequest struct {
-	JoiningServers []byte
-	LeavingServers []byte
-	NewMembers     []byte
-	// curConfigId version of the current configuration
-	// optional - causes reconfiguration to return an error if configuration is no longer current
-	CurConfigId int64
-}*/
-
-//type reconfigReponse getDataResponse
-
-/*func (r *multiRequest) Encode(buf []byte) (int, error) {
-	total := 0
-	for _, op := range r.Ops {
-		n, err := encodePacketValue(buf[total:], reflect.ValueOf(op))
-		if err != nil {
-			return total, err
-		}
-		total += n
-	}
-	r.DoneHeader.Done = true
-	n, err := encodePacketValue(buf[total:], reflect.ValueOf(r.DoneHeader))
-	if err != nil {
-		return total, err
-	}
-	total += n
-
-	return total, nil
-}
-
-//解码
-func (r *multiRequest) Decode(buf []byte) (int, error) {
-	r.Ops = make([]multiRequestOp, 0)
-	r.DoneHeader = multiHeader{-1, true, -1}
-	total := 0
-	for {
-		header := &multiHeader{}
-		n, err := decodePacketValue(buf[total:], reflect.ValueOf(header))
-		if err != nil {
-			return total, err
-		}
-		total += n
-		if header.Done {
-			r.DoneHeader = *header
-			break
-		}
-
-		req := requestStructForOp(header.Type)
-		if req == nil {
-			return total, ErrAPIError
-		}
-		n, err = decodePacketValue(buf[total:], reflect.ValueOf(req))
-		if err != nil {
-			return total, err
-		}
-		total += n
-		r.Ops = append(r.Ops, multiRequestOp{*header, req})
-	}
-	return total, nil
-}*/
-/*
-func (r *multiResponse) Decode(buf []byte) (int, error) {
-
-	var multiErr error
-	r.Ops = make([]multiResponseOp, 0)
-	r.DoneHeader = multiHeader{-1, true, -1}
-	total := 0
-	for {
-		header := &multiHeader{}
-		n, err := decodePacketValue(buf[total:], reflect.ValueOf(header))
-		if err != nil {
-			return total, err
-		}
-		total += n
-		if header.Done {
-			r.DoneHeader = *header
-			break
-		}
-		res := multiResponseOp{Header: *header}
-		var w reflect.Value
-		switch header.Type {
-		default:
-			return total, ErrAPIError
-		case opError:
-			w = reflect.ValueOf(&res.Err)
-		case opCreate:
-			w = reflect.ValueOf(&res.String)
-		case opSetData:
-			res.Stat = new(Stat)
-			w = reflect.ValueOf(res.Stat)
-		case opCheck, opDelete:
-		}
-		if w.IsValid() {
-			n, err := decodePacketValue(buf[total:], w)
-			if err != nil {
-				return total, err
-			}
-			total += n
-		}
-		r.Ops = append(r.Ops, res)
-		if multiErr == nil && res.Err != errOk {
-			// Use the first error as the error returned from Multi().
-			multiErr = res.Err.toError()
-		}
-	}
-	return total, multiErr
-}
-*/
 //将buf中的数据解码为st，st通常是response类型
 func decodePacket(buf []byte, st interface{}) (n int, err error) {
 	defer func() {
@@ -580,18 +445,12 @@ func requestStructForOp(op int32) interface{} {
 		return &setAclRequest{}
 	case opSetData:
 		return &SetDataRequest{}
-	/*case opSetWatches:
-	return &setWatchesRequest{}*/
 	case opSync:
 		return &syncRequest{}
 	case opSetAuth:
 		return &setAuthRequest{}
 	case opCheck:
 		return &CheckVersionRequest{}
-		/*case opMulti:
-			return &multiRequest{}
-		case opReconfig:
-			return &reconfigRequest{}*/
 	}
 	return nil
 }

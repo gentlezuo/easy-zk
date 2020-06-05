@@ -33,13 +33,9 @@ const (
 	opPing         = 11
 	opGetChildren2 = 12
 	opCheck        = 13
-	//opMulti        = 14
-	//opReconfig     = 16
 	opClose   = -11
 	opSetAuth = 100
-	//opSetWatches   = 101
 	opError = -1
-	// Not in protocol, used internally
 	opWatcherEvent = -2
 )
 
@@ -59,45 +55,13 @@ var (
 		opPing:         "ping",
 		opGetChildren2: "getChildren2",
 		opCheck:        "check",
-		//opMulti:        "multi",
-		//opReconfig:     "reconfig",
+
 		opClose:   "close",
 		opSetAuth: "setAuth",
-		//opSetWatches:   "setWatches",
 
-		//opWatcherEvent: "watcherEvent",
 	}
 )
 
-/*type EventType int32
-
-const (
-	EventNodeCreated         EventType = 1
-	EventNodeDeleted         EventType = 2
-	EventNodeDataChanged     EventType = 3
-	EventNodeChildrenChanged EventType = 4
-
-	EventSession     EventType = -1
-	EventNotWatching EventType = -2
-)
-
-var (
-	eventNames = map[EventType]string{
-		EventNodeCreated:         "EventNodeCreated",
-		EventNodeDeleted:         "EventNodeDeleted",
-		EventNodeDataChanged:     "EventNodeDataChanged",
-		EventNodeChildrenChanged: "EventNodeChildrenChanged",
-		EventSession:             "EventSession",
-		EventNotWatching:         "EventNotWatching",
-	}
-)
-
-func (t EventType) String() string {
-	if name := eventNames[t]; name != "" {
-		return name
-	}
-	return "Unknown"
-}*/
 
 //zk服务节点模式[unknown|leader|follower|standalone]
 type Mode uint8
@@ -176,7 +140,6 @@ type ErrCode int32
 
 const (
 	errOk = 0
-	// System and server-side errors
 	errSystemError          = -1
 	errRuntimeInconsistency = -2
 	errDataInconsistency    = -3
@@ -201,8 +164,6 @@ const (
 	errClosing                 ErrCode = -116
 	errNothing                 ErrCode = -117
 	errSessionMoved            ErrCode = -118
-	// Attempts to perform a reconfiguration operation when reconfiguration feature is disabled
-	//errZReconfigDisabled ErrCode = -123
 )
 
 var (
@@ -221,7 +182,6 @@ var (
 	ErrClosing                 = errors.New("zk: zookeeper is closing")
 	ErrNothing                 = errors.New("zk: no server responses to process")
 	ErrSessionMoved            = errors.New("zk: session moved to another server, so operation is ignored")
-	//ErrReconfigDisabled        = errors.New("attempts to perform a reconfiguration operation when reconfiguration feature is disabled")
 	ErrBadArguments = errors.New("invalid arguments")
 
 	errCodeToError = map[ErrCode]error{
@@ -234,13 +194,11 @@ var (
 		errNodeExists:              ErrNodeExists,
 		errNotEmpty:                ErrNotEmpty,
 		errSessionExpired:          ErrSessionExpired,
-		// errInvalidCallback:         ErrInvalidCallback,
 		errInvalidAcl:   ErrInvalidACL,
 		errAuthFailed:   ErrAuthFailed,
 		errClosing:      ErrClosing,
 		errNothing:      ErrNothing,
 		errSessionMoved: ErrSessionMoved,
-		//errZReconfigDisabled: ErrReconfigDisabled,
 		errBadArguments: ErrBadArguments,
 	}
 )

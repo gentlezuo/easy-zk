@@ -2,12 +2,11 @@ package zookeeper
 
 import (
 	"fmt"
-	"strings"
 	"testing"
 	"time"
 )
 
-const ZK_ADDRESS=""
+const ZK_ADDRESS="182.92.99.111:2181"
 
 func TestConnect(t *testing.T) {
 	addr := []string{ZK_ADDRESS}
@@ -28,7 +27,7 @@ func TestConn_Create(t *testing.T) {
 	}
 	defer conn.Close()
 
-	p, err := conn.Create("/a", []byte("aaa"), ModeEphemeralSequence, WorldACL(PermissionAll))
+	/*p, err := conn.Create("/a", []byte("aaa"), ModeEphemeralSequence, WorldACL(PermissionAll))
 	if err != nil {
 		t.Error(err)
 	}
@@ -46,7 +45,26 @@ func TestConn_Create(t *testing.T) {
 	p4, _ := conn.Create("/d", []byte("ddd"), ModePersistentSequence, WorldACL(PermissionAll))
 	if !strings.HasPrefix(p4, "/d") {
 		t.Error("创建永久序列节点失败")
+	}*/
+	_, err = conn.Create("/b", []byte("aaa"), 10, WorldACL(PermissionAll))
+	if err != nil {
+		t.Error(err)
 	}
+	/*if !strings.HasPrefix(p, "/a") {
+		t.Error("创建临时序列节点失败")
+	}
+	p2, _ := conn.Create("/b", []byte("bbb"), ModeEphemeral, WorldACL(PermissionAll))
+	if "/b" != p2 {
+		t.Error("创建临时无序列节点失败")
+	}
+	p3, _ := conn.Create("/c", []byte("ccc"), ModePersistent, WorldACL(PermissionAll))
+	if "/c" != p3 {
+		t.Error("创建永久无序列节点失败")
+	}
+	p4, _ := conn.Create("/d", []byte("ddd"), ModePersistentSequence, WorldACL(PermissionAll))
+	if !strings.HasPrefix(p4, "/d") {
+		t.Error("创建永久序列节点失败")
+	}*/
 	time.Sleep(time.Second * 2)
 
 }

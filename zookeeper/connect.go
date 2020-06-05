@@ -14,14 +14,11 @@ import (
 )
 
 var (
-	//ErrNoServer = errors.New("zk: could not connect to a server")
-
 	ErrInvalidPath = errors.New("zk: invalid path")
 )
 
 const (
 	bufferSize = 1536 * 1024
-	//eventChanSize   = 7
 	sendChanSize = 16
 	//protectedPrefix = "_c_"
 )
@@ -34,13 +31,7 @@ type authCreds struct {
 	auth   []byte
 }
 
-/*type Event struct {
-	Type   EventType
-	State  State
-	Path   string // For non-session events, the path of the watched node.
-	Err    error
-	Server string // For connection events
-}*/
+
 
 type Dialer func(network string, address string, timeout time.Duration) (net.Conn, error)
 
@@ -55,8 +46,7 @@ type Conn struct {
 	serverMutex               sync.Mutex
 	server                    string //zk服务地址
 	conn                      net.Conn
-	//eventChan      chan Event
-	//eventCallback  EventCallBack
+
 	shouldQuit     chan struct{}
 	pingInterval   time.Duration
 	recvTimeout    time.Duration
